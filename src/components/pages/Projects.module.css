@@ -1,0 +1,17 @@
+.project_container {
+  padding: 2em;
+}
+
+.title_container {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 2em;
+}
+
+.total_container {
+  width: 100%;
+  margin: 2em 0;
+  padding: 0.5em 0;
+  border-top: 1px solid  #7a7a7a;
+  border-bottom: 1px solid #7a7a7a;
+}

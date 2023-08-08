@@ -1,0 +1,7 @@
+.main {
+    display: flex;
+    margin: auto;
+}
+.main h1{
+    font-size: 3em;
+}
