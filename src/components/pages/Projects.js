@@ -41,7 +41,7 @@ function Projects() {
           setRemoveLoading(true);
         })
         .catch((err) => console.log(err));
-    }, 400000);
+    }, 4000000);
   }, []);
 
   function removeProject(id) {
@@ -60,7 +60,7 @@ function Projects() {
   }
 
 
-  return (
+  return (<> 
     <div className={styles.project_container}>
       <div className={styles.title_container}>
         <h1>Meus Projetos</h1>
@@ -81,7 +81,7 @@ function Projects() {
               handleRemove={removeProject}
             />
           ))}
-        {!removeLoading && <Loading />}
+        
         {removeLoading && projects.length === 0 && <NoData dataType={'projetos'}/>}
       </Container>
       {projects.length > 0 && <>
@@ -93,7 +93,8 @@ function Projects() {
           </div>
         </>}
     </div>
-  );
+    {!removeLoading && <Loading />}
+    </>);
 }
 
 export default Projects;
