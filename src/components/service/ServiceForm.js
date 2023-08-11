@@ -1,10 +1,9 @@
-import { useState, useEffect } from "react";
-
+import Styles from "../project/ProjectForm.module.css";
 import Input from "../form/Input";
-// import Select from "../form/Select";
+import Select from "../form/Select";
 import SubmitButton from "../form/SubmitButton";
 
-import Styles from "../project/ProjectForm.module.css";
+import { useState, useEffect } from "react";
 
 function ServiceForm({ handleSubmit, btnText, projectData }) {
   const [service, setService] = useState([]);
@@ -22,8 +21,9 @@ function ServiceForm({ handleSubmit, btnText, projectData }) {
       .catch((err) => console.log(err));
   }, []);
 
-  const projectName = projects.map((project) => project.name)
-  console.log(projectName);
+  // descobrir o pq do erro "projects.map isn't a function"
+  // ver a video-aula da construção do project form
+  console.log(projects[0]);
 
   function submit(e) {
     e.preventDefault();
@@ -32,21 +32,30 @@ function ServiceForm({ handleSubmit, btnText, projectData }) {
   }
 
   function handleChange(e) {
-    setService({ ...service, [e.target.name]: e.target.value });
+    setService({ 
+      ...service, 
+      [e.target.name]: e.target.value });
   }
     
-  // function handleProject(e) {
-  //   setProjects({
-  //     ...projects,
-  //     category: {
-  //       id: e.target.value,
-  //       name: e.target.options[e.target.selectedIndex].text,
-  //     },
-  //   });
-  // }
+  function handleProject(e) {
+    setProjects({
+      ...projects,
+      category: {
+        id: e.target.value,
+        name: e.target.options[e.target.selectedIndex].text,
+      },
+    });
+  }
 
   return (
     <form onSubmit={submit} className={Styles.form}>
+      <Select
+        name="project_id"
+        text="Projeto pertencente"
+        options={projects}
+        handleOnChange={handleProject}
+        value={projects ? projects.id : ''}
+      />
       <Input
         type="text"
         text="Nome do Serviço"
@@ -75,15 +84,6 @@ function ServiceForm({ handleSubmit, btnText, projectData }) {
         placeholder="Exemplo: http://exemplo.com/item000001"
         handleOnChange={handleChange}
       />
-      
-      {/* <Select
-        name="project_id"
-        text="Projeto pertencente"
-        options={projects}
-        handleOnChange={handleProject}
-        value={projects ? projects.id : ""}
-      /> */}
-
       <SubmitButton text={btnText} />
     </form>
   );

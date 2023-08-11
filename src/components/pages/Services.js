@@ -11,15 +11,14 @@ import ServiceCard from "../service/ServiceCard";
 // COLOCAR O UUID V4 PRA FAZER PARAR DE RECLAMAR SOBRE KEYS REPITIDAS
 function Services() {
   const [showServiceForm, setShowServiceForm] = useState(false);
-  const [project, setProject] = useState([]);
-  const [projects, setProjects] = useState([]);
+  const [project, setProject] = useState([]); // tirar ele pra só deixar o serviço OU NÃO
   const [services, setServices] = useState([]);
 
   const [removeLoading, setRemoveLoading] = useState(false);
 
   useEffect(() => {
     setTimeout(() => {
-      fetch("http://localhost:5000/projects", {
+      fetch("http://localhost:5000/services", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -27,19 +26,16 @@ function Services() {
       })
         .then((resp) => resp.json())
         .then((data) => {
-          setProjects(data);
+          setServices(data);
           console.log(data);
           setRemoveLoading(true);
         })
         .catch((err) => console.log(err));
-    }, 400);
+    }, 40000);
   }, []);
 
   function removeService(id, cost) {
-    const servicesUpdated = project.services.filter((service) => service.id !== id);
-
-    console.log(services);
-    
+    const servicesUpdated = project.services.filter((service) => service.id !== id); 
     const projectUpdated = project;
     projectUpdated.services = servicesUpdated;
     projectUpdated.cost = parseFloat(projectUpdated.cost) - parseFloat(cost);
@@ -60,6 +56,8 @@ function Services() {
       .catch((err) => console.log(err));
   }
 
+
+  // FAZER FUNÇÃO ASSINCRONA ENQUANTO OS DADOS NÃO CARREGAM. ENQUANTO ELES NÃO CARREGAM, DEIXA O COMPONENTE DE lOADING
   return (
     <div className={styles.project_container}>
       <div className={styles.title_container}>
@@ -67,29 +65,23 @@ function Services() {
         <LinkButton to="/newservice" text="Criar Serviço" />
       </div>
       <Container customClass="start">
-        {projects.length > 0 &&
-          projects.map((project) =>
-            project.services.map((service) => (
-              <>
-                <ServiceCard
-                  id={service.id}
-                  key={service.id}
-                  name={service.name}
-                  cost={service.cost.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.")}
-                  description={service.description || "--"}
-                  url={service.url || "--"}
-                  handleRemove={removeService}
-                  // handleEdit={editService}
-                />
-              </>
-            ))
+        {services.length > 0 &&
+          services.map((service) =>
+          <>
+            <ServiceCard
+              id={service.id}
+              key={service.id}
+              name={service.name}
+              cost={service.cost.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.")}
+              description={service.description || "--"}
+              url={service.url || "--"}
+              handleRemove={removeService}
+              // handleEdit={editService}
+            />
+          </>
           )}
+        {services.length === 0 && <NoData dataType={'serviços'}/>}
         {!removeLoading && <Loading />}
-        {removeLoading && projects
-          .map((project) => project.services)
-          .filter((service) => service.length > 0)
-          .length === 0 && <NoData dataType={'serviços'} 
-        />}
       </Container>
     </div>
   );

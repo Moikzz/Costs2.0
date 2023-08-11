@@ -1,16 +1,18 @@
 import { Link } from "react-router-dom";
-
-import Container from "./Container";
 import logo from "../../img/costs_logo.png";
 import styles from "./Navbar.module.css";
 
 function Navbar() {
   return (
     <nav className={styles.navbar}>
-      <Container>
+
+        <div className={styles.mainNavbar}>
+        <div>
         <Link to="/">
           <img src={logo} alt="costs" />
         </Link>
+        </div>
+        <div>
         <ul className={styles.list}>
           <li className={styles.item}>
             <Link to="/">Home</Link>
@@ -25,7 +27,8 @@ function Navbar() {
             <Link to="/simulation">Simulador</Link>
           </li>
         </ul>
-      </Container>
+        </div>
+        </div>
     </nav>
   );
 }

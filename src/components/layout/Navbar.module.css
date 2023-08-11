@@ -1,8 +1,13 @@
 .navbar {
-  display: flex;
-  justify-content: space-between;
   background-color: #222;
   padding: 1em;
+}
+
+.mainNavbar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .list {
@@ -18,6 +23,7 @@
 .item a {
   color: #fff;
   text-decoration: none;
+  transition: .25s;
 }
 
 .item a:hover {
