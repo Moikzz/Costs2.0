@@ -4,8 +4,8 @@
   color: #fff;
   padding: 1em;
   width: 100%;
-  position: absolute;
-  bottom: 0;
+  position: fixed;
+  bottom: 0
 }
 
 .social_list {

@@ -1,57 +1,35 @@
 {
-  "projects": [
-    {
-      "name": "Big PC",
-      "budget": "30000",
-      "category": {
-        "id": "2",
-        "name": "desenvolvimento"
-      },
-      "cost": 20100,
-      "id": 1
-    }
-  ],
+  "projects": [],
   "services": [
     {
-      "OwnerID": [1],
-      "name": "RTX 4080 Aorus Master Black",
-      "cost": "19000",
-      "description": "",
-      "id": "54277443-9000-46d0-8023-576b607e1788"
-    },
-    {
-      "OwnerID": [1],
-      "name": "Noctua NH-D15 Chromax Black",
-      "cost": "1100",
-      "description": "",
-      "id": "e4879e46-6492-40d1-b8ea-0fa7ed97d55d"
+      "OwnerID": {
+        "id": "1",
+        "name": "Moises"
+      },
+      "name": "Teste Serviço",
+      "id": 1
     }
   ],
   "categories": [
     {
       "id": 1,
-      "name": "infra-estrutura",
-      "displayName": "infra-Estrutura"
+      "name": "Infra-Estrutura"
     },
     {
       "id": 2,
-      "name": "desenvolvimento",
-      "displayName": "Desenvolvimento"
+      "name": "Desenvolvimento"
     },
     {
       "id": 3,
-      "name": "design",
-      "displayName": "Design"
+      "name": "Design"
     },
     {
       "id": 4,
-      "name": "outros",
-      "displayName": "Outros"
+      "name": "Outros"
     },
     {
       "id": 5,
-      "name": "planejamento",
-      "displayName": "Planejamento"
+      "name": "Planejamento"
     }
   ]
 }

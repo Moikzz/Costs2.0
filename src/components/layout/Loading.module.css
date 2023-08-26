@@ -1,9 +1,9 @@
 .loader_container {
-  height: 100%;
   display: flex;
   justify-content: center;
+  margin: auto;
 }
 
 .loader {
-  width: 25%;
+  width: 100%;
 }

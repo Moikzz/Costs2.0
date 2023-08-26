@@ -3,21 +3,15 @@ import ServiceForm from "./../service/ServiceForm";
 import styles from "./NewProject.module.css";
 
 function NewService() {
-  const history = useNavigate();
+  const redirect = useNavigate();
 
-  function createPost(project) {
-    project.cost = 0;
-    project.services = [];
-
-    fetch("http://localhost:5000/projects", {
+  function createService(service) {
+    fetch("http://localhost:5000/services", {
       method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(project),
-    })
+      headers: {"content-type": "application/json",},
+      body: JSON.stringify(service)})
       .then((resp) => resp.json())
-      .then(() => {history("/projects", { state: { message: "Projeto Criado!" } })})
+      .then(() => {redirect("/services", { state: { message: "Serviço Criado!" } })})
       .catch((error) => console.log(error));
   }
 
@@ -25,7 +19,7 @@ function NewService() {
     <div className={styles.newProject_container}>
       <h1>Criar Serviço</h1>
       <p>Crie um serviço para depois adicionar a um projeto</p>
-      <ServiceForm handleSubmit={createPost} btnText="Criar Serviço" />
+      <ServiceForm handleSubmit={createService} btnText="Criar Serviço" />
     </div>
   );
 }
