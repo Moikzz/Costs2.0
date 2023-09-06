@@ -12,16 +12,17 @@ import styles from "./Projects.module.css"
 
 function Projects() {
   const [projects, setProjects] = useState([])
-  const [services, setServices] = useState([]);
-  const [projectMessage, setProjectMessage] = useState("")
+  const [services, setServices] = useState([])
   const [removeLoading, setRemoveLoading] = useState(false)
+  const [projectMessage, setProjectMessage] = useState("")
 
-  // const percentage = (a,b) => (`(${Math.round((a / b) * 100)}%)`)
+  const percentage = (a,b) => (`(${Math.round((parseInt(a) / parseInt(b)) * 100)}%)`)
   const format = (number) => number.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.")
 
-  const totalBudget = projects.map((project) => parseFloat(project.budget)).reduce((acc, val) => acc + val, 0)
-  const totalCost = projects.map((project) => parseFloat(project.cost)).reduce((acc, val) => acc + val, 0)
+  const totalBudget = projects.map((project) => parseInt(project?.budget)).reduce((acc, val) => acc + val, 0)
+  const totalCost = services.map((service) => parseInt(service?.cost)).reduce((acc, val) => acc + val, 0)
   const totalRemain = totalBudget - totalCost
+  
   const location = useLocation()
   const nothing = '--'
   let message = ""
@@ -30,21 +31,16 @@ function Projects() {
 
   useEffect(() => {
     setTimeout(() => {
-      fetch("http://localhost:5000/projects", {method: "GET", headers: {"Content-Type": "application/json"}})
-      .then((resp) => resp.json())
-      .then((data) => {setProjects(data); setRemoveLoading(true)})
-      .catch((err) => console.log(err))
+      const fetchData = async () => {
+        await fetch("http://localhost:5000/projects", {method: "GET", headers: {"Content-Type": "application/json"}})
+        .then((resp) => resp.json())
+        .then((data) => {setProjects(data)})
+        .then(await fetch(`http://localhost:5000/services`, {method: "GET", headers: {"content-type" : "application/json"}})
+        .then((resp) => resp.json())
+        .then((data) => {setServices(data); setRemoveLoading(true)}))
+        .catch((err) => console.log(err))
+      }; fetchData()
     }, 400)
-  }, [])
-
-  useEffect(() => {
-    const fetchServices = async () => {
-      await fetch(`http://localhost:5000/services`, {method: "GET", headers: {"content-type" : "application/json"}})
-      .then((resp) => resp.json())
-      .then((data) => setServices(data))
-      .catch((err) => console.log(err))
-    }
-    fetchServices()
   }, [])
 
   function removeProject(id) {
@@ -54,48 +50,65 @@ function Projects() {
     .catch((err) => console.log(err))
   }
   
-  function projectCost (id) {
-    const thoseServices = services.filter((service) => parseInt(service.OwnerID.id) === id)
-    const serviceCostArray = thoseServices.map((service) => parseInt(service.cost))
-    const total = serviceCostArray.reduce((acc, val) => acc + val)
-    return format(total);
+  const projectCost = (id) => {
+    return services?.filter((service) => parseInt(service?.OwnerID?.id) === id)
+      .map((service) => parseInt(service?.cost))
+      .reduce((acc, val) => acc + val, 0)
   }
 
-  // Tentar tirar o RemoveLoading pra ver se fica como a Página Project e Service
-  // Colocar o Condicional do Loading dentro de tudo
-  // Colocar o Condicional do NoData dentro do Loading
+  const ownedServicesCount = (id) => {
+    return services.filter((thoseServices) => parseInt(thoseServices?.OwnerID?.id) === id).length
+  }
 
-  return (<> 
-    <div className={styles.project_container}>
-      <div className={styles.title_container}>
-        <h1>Meus Projetos</h1>
-        <LinkButton to="/NewProject" text="Criar Projeto" />
-      </div>
-      {message && <Message type="succsess" msg={message} />}
-      {projectMessage && <Message type="succsess" msg={projectMessage} />}
-      <Container customClass="start">
-        <div className={styles.projectCard}>
-          {projects.length > 0 && projects.map((project) => (
-            <ProjectCard
-              id={project.id}
-              key={project.id}
-              name={project.name}
-              category={project.category.name}
-              budget={project.budget ? (`${format(project.budget)},00`) : nothing}
-              cost={project.budget ? (`${projectCost(project.id)},00`) : nothing}
-              handleRemove={removeProject}
-            />))}
-        </div>
-        {projects.length > 0 && <>
-          <div className={styles.total}>
-            <div className={styles.total_container}><h3>Investimento Total: {totalBudget ? (`R$ ${format(totalBudget)},00`) : nothing}</h3></div>
-            <div className={styles.total_container}><h3>Total Restante: {totalRemain ? (`R$ ${format(totalRemain)},00`) : nothing}</h3></div>
+  return (<>
+    {!removeLoading && <Loading/>}
+    {removeLoading === true && <>
+      {projects.length !== 0 ? (<>
+          <div className={styles.project_container}>
+            <div className={styles.title_container}>
+              <h1>Meus Projetos</h1>
+              <LinkButton to="/NewProject" text="Criar Projeto" />
+            </div>
+            {message && <Message type="succsess" msg={message} />}
+            {projectMessage && <Message type="succsess" msg={projectMessage} />}
+            <Container customClass="start">
+              <div className={styles.projectCard}>
+                {projects.length > 0 && projects.filter((projects) => projects.id > 0).map((project) => (
+                  <ProjectCard
+                    id={project.id}
+                    key={project.id}
+                    name={project.name}
+                    category={project.category.name}
+                    servicesOwned={ownedServicesCount(project.id) > 0 ? (ownedServicesCount(project.id)) : nothing}
+                    budget={project.budget > 0 ? (`${format(project.budget)},00`) : nothing}
+                    cost={projectCost(project.id) > 0 ? (`${format(projectCost(project?.id))},00 ${percentage((projectCost(project?.id)), (parseInt(project?.budget)))}`) : nothing}
+                    handleRemove={removeProject}
+                  />))}
+              </div>
+              {projects.length > 0 && <>
+                <div className={styles.total}>
+                  <div className={styles.total_container}>
+                    <h3>Investimento Total:</h3>
+                    <h3>{totalBudget > 0  ? (`R$ ${format(totalBudget)},00`) : nothing}</h3>
+                    </div>
+                  <div className={styles.total_container}>
+                    <h3>Total Restante: </h3>
+                    <h3>{totalRemain > 0 ? (`R$ ${format(totalRemain)},00`) : nothing}</h3>
+                  </div>
+                </div>
+              </>}
+            </Container>
           </div>
-        </>}
-        {removeLoading && projects.length === 0 && <NoData dataType={'projetos'}/>}
-        {!removeLoading && <Loading />}
-      </Container>
-    </div>
+      </>) : (<>
+        <div className={styles.project_container}>
+          <div className={styles.title_container}>
+            <h1>Meus Projetos</h1>
+            <LinkButton to="/newproject" text="Criar Projeto" />
+          </div>
+        <NoData dataType={'Projetos'}/>
+        </div>
+      </>)}
+    </>}
   </>)
 }
 

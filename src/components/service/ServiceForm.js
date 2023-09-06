@@ -33,8 +33,9 @@ function ServiceForm({ handleSubmit, btnText, serviceData }) {
       OwnerID: {
         id: e.target.value,
         name: e.target.options[e.target.selectedIndex].text
-      }})}
-
+      }})
+    }
+    
   return (
     <form onSubmit={submit} className={styles.form}>
       <Select

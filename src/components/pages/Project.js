@@ -76,9 +76,9 @@ function Project() {
             {!showProjectForm ? (
               <div className={Styles.project_info}>
                 <p><span> Categoria: </span> {project.category.name ? (project.category.name): nothing}</p>
-                <p><span> Total Disponível: </span>{" "}{project.budget ? (`R$ ${formatedCurrency(project.budget)},00`) : nothing}</p>
-                <p><span> Total Utilizado: </span>{" "}{project.budget ? (`R$ ${formatedCurrency(serviceCostArray)},00 (${formatedPercentage(serviceCostArray, project.budget)})`) : nothing}</p>
-                <p><span> Total Restante: </span>{" "}{project.budget ? (`R$ ${formatedCurrency(project.budget - serviceCostArray)},00 (${formatedPercentage(project.budget - serviceCostArray, project.budget)})`) : nothing}</p>
+                <p><span> Total Disponível: </span>{" "}{project.budget > 0 ? (`R$ ${formatedCurrency(project.budget)},00`) : nothing}</p>
+                <p><span> Total Utilizado: </span>{" "}{project.budget > 0 ? (serviceCostArray === 0 ? ('Nenhum gasto detectado') : `R$ ${formatedCurrency(serviceCostArray)},00 (${formatedPercentage(serviceCostArray, project.budget)})`) : nothing}</p>
+                {serviceCostArray !== 0 && <p><span> Total Restante: </span>{" "}{project.budget > 0 ? (`R$ ${formatedCurrency(project.budget - serviceCostArray)},00 (${formatedPercentage(project.budget - serviceCostArray, project.budget)})`) : nothing}</p>}
               </div>
               ) : (
                 <div className={Styles.project_info}>
@@ -91,12 +91,11 @@ function Project() {
               )
             }
           </div>
-          <h2>Serviços</h2>
+          {services.length === 0 ? (<p className={Styles.noService}>Não há serviços cadastrados</p>) : (<div className={Styles.addService}><h2>Serviços</h2><LinkButton to="/newservice" text="Criar Serviço" /></div>)}
           <div className={Styles.services}>
             {services.length > 0 &&
               services.map((service) => (<>
                 <ServiceCard
-                  showOwner={false}
                   owner={service.OwnerID.name}
                   id={service.id}
                   key={service.id}
@@ -108,11 +107,6 @@ function Project() {
                   handleRemove={removeService}
                 />
               </>))}
-            {services.length === 0 && <p>Não há serviços cadastrados</p>}
-          </div>
-          <div className={Styles.service_form_container}>
-            <h2>Adicione um Serviço</h2>
-            <LinkButton to="/newservice" text="Criar Serviço" />
           </div>
         </Container>
       </div>

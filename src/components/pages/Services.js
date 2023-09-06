@@ -12,6 +12,7 @@ import styles from "./Services.module.css";
 
 function Services() {
   const [services, setServices] = useState([]);
+  const [projects, setProjects] = useState([]);
   const [removeLoading, setRemoveLoading] = useState(false);
   const [serviceMessage, setServiceMessage] = useState("");
   const nothing = '--'
@@ -22,15 +23,15 @@ function Services() {
 
   useEffect(() => {
     setTimeout(() => {
-      fetch("http://localhost:5000/services", {
-        method: "GET",
-        headers: {"Content-Type": "application/json"}})
-        .then((resp) => resp.json())
-        .then((data) => {
-          setServices(data);
-          setRemoveLoading(true);
-        })
-        .catch((err) => console.log(err));
+      const fetchData = async () => {
+        await fetch("http://localhost:5000/services", {method: "GET",headers: {"Content-Type": "application/json"}})
+          .then((resp) => resp.json())
+          .then((data) => {setServices(data);setRemoveLoading(true)})
+          .then(await fetch("http://localhost:5000/projects", {method: "GET",headers: {"Content-Type": "application/json"}})
+          .then((resp) => resp.json())
+          .then((data) => setProjects(data)))
+          .catch((err) => console.log(err));
+      }; fetchData()
     }, 400);
   }, []);
 
@@ -49,35 +50,48 @@ function Services() {
     return parseInt(number).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.")
   }
   
+  const projectOwner = (id) => {
+    return projects.filter((project) => project?.id === parseInt(id)).map((project) => project?.name).reduce((acc,val) => acc + val, '')
+  }
+  
   return (<>
-    <div className={styles.project_container}>
-      <div className={styles.title_container}>
-        <h1>Meus Serviços</h1>
-        <LinkButton to="/newservice" text="Criar Serviço" />
-      </div>
-      {message && <Message type="succsess" msg={message}/>}
-      {serviceMessage && <Message type="succsess" msg={serviceMessage} />}
-      <Container customClass="start">
-        <div className={styles.projectCard}>
-          {services.length > 0 &&
-            services.map((service) => (
-              <ServiceCard
-                showOwner={true}
-                owner={service.OwnerID?.name ? (service.OwnerID?.name) : nothing}
-                id={service.id}
-                key={service.id}
-                name={service.name}
-                cost={service.cost ? (format(service.cost)) : nothing}
-                description={service.description ? (service.description) : nothing}
-                url={service.url || nothing}
-                handleRemove={removeService}
-              />
-            ))}
+    {!removeLoading && <Loading/>}
+    {removeLoading === true && <>
+      {services.length !== 0 ? (<>
+        <div className={styles.project_container}>
+          <div className={styles.title_container}>
+            <h1>Meus Serviços</h1>
+            <LinkButton to="/newservice" text="Criar Serviço" />
+          </div>
+          {message && <Message type="succsess" msg={message}/>}
+          {serviceMessage && <Message type="succsess" msg={serviceMessage} />}
+          <Container customClass="start">
+            <div className={styles.projectCard}>
+              {services.length > 0 && services.filter((service) => service.id > 0).map((service) => (
+                <ServiceCard
+                  showOwner={true}
+                  owner={service.OwnerID ? (projectOwner(service.OwnerID?.id)) : nothing}
+                  id={service.id}
+                  key={service.id}
+                  name={service.name}
+                  cost={service.cost > 0 ? (format(service.cost)) : nothing}
+                  description={service.description ? (service.description) : nothing}
+                  url={service.url || nothing}
+                  handleRemove={removeService}/>
+                ))}
+            </div>
+          </Container>
         </div>
-        {removeLoading && services.length === 0 && <NoData dataType={'serviços'}/>}
-        {!removeLoading && <Loading />}
-      </Container>
-    </div>
+        </>) : (<>
+        <div className={styles.project_container}>
+          <div className={styles.title_container}>
+            <h1>Meus Projetos</h1>
+            <LinkButton to="/newproject" text="Criar Projeto" />
+          </div>
+        <NoData dataType={'Projetos'}/>
+        </div>
+      </>)}
+    </>}
   </>);
 }
 
