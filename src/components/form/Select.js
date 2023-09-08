@@ -8,14 +8,14 @@ function Select({ text, name, options, handleOnChange, value }) {
         name={name}
         id={name}
         onChange={handleOnChange}
-        value={value || ""}
+        value={value}
       >
         <option> Selecione uma Opção</option>
-        {options.map((option) => (
+        {options ? options.map((option) => (
           <option value={option.id} key={option.id}>
             {option.name}
           </option>
-        ))}
+        )) : 'Error'}
       </select>
     </div>
   );

@@ -3,21 +3,18 @@ import ProjectForm from "./../project/ProjectForm";
 import styles from "./NewProject.module.css";
 
 function NewProject() {
-  const history = useNavigate();
+  const redirect = useNavigate();
 
-  function createPost(project) {
+  function createProject(project) {
     project.cost = 0;
-    project.services = [];
 
     fetch("http://localhost:5000/projects", {
       method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(project),
+      headers: {"content-type": "application/json"},
+      body: JSON.stringify(project)
     })
       .then((resp) => resp.json())
-      .then(() => {history("/projects", { state: { message: "Projeto Criado!" } })})
+      .then(() => {redirect("/projects", { state: { message: "Projeto Criado!" } })})
       .catch((error) => console.log(error));
   }
 
@@ -25,7 +22,7 @@ function NewProject() {
     <div className={styles.newProject_container}>
       <h1>Criar Projeto</h1>
       <p>Crie um projeto para depois adicionar os serviços</p>
-      <ProjectForm handleSubmit={createPost} btnText="Criar Projeto" />
+      <ProjectForm handleSubmit={createProject} btnText="Criar Projeto" />
     </div>
   );
 }

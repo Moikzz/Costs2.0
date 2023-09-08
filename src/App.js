@@ -18,7 +18,7 @@ function App() {
   return (
     <Router>
       <Navbar />
-      <Container customClass="min-height">
+      <Container>
         <Routes>
           <Route exact path="/" element={<Home />} />
           <Route path="/simulation" element={<Simulation />} />
@@ -27,7 +27,7 @@ function App() {
           <Route path="/newproject" element={<NewProject />} />
           <Route path="/newservice" element={<NewService />} />
           <Route path="/project/:id" element={<Project />} />
-          <Route path="/service" element={<Service />} /> {/* CONSERTAR O LINK AQUI */}
+          <Route path="/service/:id" element={<Service />} />
         </Routes>
       </Container>
       <Footer />

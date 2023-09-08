@@ -1,5 +1,7 @@
-.navbar {
+.main {
   display: flex;
+  flex-direction: row;
+  align-items: center;
   justify-content: space-between;
   background-color: #222;
   padding: 1em;
@@ -11,15 +13,13 @@
   align-items: center;
 }
 
-.item {
+.list a {
   margin-right: 1em;
-}
-
-.item a {
   color: #fff;
   text-decoration: none;
+  transition: .25s;
 }
 
-.item a:hover {
+.list a:hover {
   color: #ffbb33;
 }
