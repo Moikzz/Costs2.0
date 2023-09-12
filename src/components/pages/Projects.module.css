@@ -1,21 +1,11 @@
-.project_container {
-  padding: 2em;
-  height: 100%;
-  display: flex;
+.project{
   flex-direction: column;
 }
 
-.title_container {
+.title{
   display: flex;
   justify-content: space-between;
-}
-
-.total_container {
-  width: 200px;
-  padding: 1em 0;
-  border-top: 1px solid #7a7a7a;
-  border-bottom: 1px solid #7a7a7a;
-  text-align: center;
+  align-items: center;
 }
 
 .total {
@@ -27,7 +17,16 @@
   width: 50%;
 }
 
+.total_container {
+  width: 200px;
+  border-top: 1px solid #7a7a7a;
+  border-bottom: 1px solid #7a7a7a;
+  text-align: center;
+  padding-top: 0.5em;
+}
+
 .projectCard {
   display: flex;
-  margin: 5em auto;
+  margin: 3em auto;
+  justify-content: center
 }

@@ -1,36 +1,14 @@
-.project_container {
-    padding: 2em;
-    height: 100%;
-    display: flex;
+.service{
     flex-direction: column;
   }
-  
-  .title_container {
+
+  .title {
     display: flex;
     justify-content: space-between;
+    align-items: center;
   }
   
-  .total_container {
-    display: flex;
-    justify-content: center;
-    width: 45%;
-    margin: 2em 0;
-    padding: 0.5em 0;
-    border-top: 1px solid  #7a7a7a;
-    border-bottom: 1px solid #7a7a7a;
-  }
-  
-  .total {
-    display: flex;
-    position: fixed;
-    bottom: 10%;
-    left: 5%;
-    width: 90%;
-    justify-content: center;
-    text-align: center;
-  }
-  
-  .projectCard {
+  .serviceCard {
     display: flex;
     flex-direction: row;
     justify-content: center;

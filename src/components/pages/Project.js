@@ -8,6 +8,7 @@ import Container from "./../layout/Container";
 import LinkButton from "../layout/LinkButton";
 import ServiceCard from "../service/ServiceCard";
 import ProjectForm from "./../project/ProjectForm";
+import NoData from './../layout/NoData';
 
 function Project() {
   const { id } = useParams();
@@ -91,7 +92,12 @@ function Project() {
               )
             }
           </div>
-          {services.length === 0 ? (<p className={Styles.noService}>Não há serviços cadastrados</p>) : (<div className={Styles.addService}><h2>Serviços</h2><LinkButton to="/newservice" text="Criar Serviço" /></div>)}
+          {services.length === 0 ? (<>
+            <LinkButton to="/newservice" text="Criar Serviço" />
+            <NoData dataType='Serviços cadastrados...'/>
+          </>) : (
+            <div className={Styles.addService}><h2>Serviços</h2><LinkButton to="/newservice" text="Criar Serviço" /></div>
+          )}
           <div className={Styles.services}>
             {services.length > 0 &&
               services.map((service) => (<>

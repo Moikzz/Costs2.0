@@ -57,19 +57,17 @@ function Services() {
   return (<>
     {!removeLoading && <Loading/>}
     {removeLoading === true && <>
-      {services.length !== 0 ? (<>
-        <div className={styles.project_container}>
-          <div className={styles.title_container}>
+      {services.length > 1 ? (<>
+          <div className={styles.title}>
             <h1>Meus Serviços</h1>
             <LinkButton to="/newservice" text="Criar Serviço" />
           </div>
           {message && <Message type="succsess" msg={message}/>}
           {serviceMessage && <Message type="succsess" msg={serviceMessage} />}
-          <Container customClass="start">
-            <div className={styles.projectCard}>
-              {services.length > 0 && services.filter((service) => service.id > 0).map((service) => (
+          <Container>
+            <div className={styles.serviceCard}>
+              {services.length > 1 && services.filter((service) => service.id > 0).map((service) => (
                 <ServiceCard
-                  showOwner={true}
                   owner={service.OwnerID ? (projectOwner(service.OwnerID?.id)) : nothing}
                   id={service.id}
                   key={service.id}
@@ -81,14 +79,13 @@ function Services() {
                 ))}
             </div>
           </Container>
-        </div>
         </>) : (<>
-        <div className={styles.project_container}>
-          <div className={styles.title_container}>
-            <h1>Meus Projetos</h1>
-            <LinkButton to="/newproject" text="Criar Projeto" />
+        <div className={styles.service}>
+          <div className={styles.title}>
+            <h1>Meus Serviços</h1>
+            <LinkButton to="/newservice" text="Criar serviço" />
           </div>
-        <NoData dataType={'Projetos'}/>
+        <NoData dataType={'serviços'}/>
         </div>
       </>)}
     </>}

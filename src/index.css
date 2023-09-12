@@ -11,3 +11,102 @@ body,
   background-color: #efefef;
   height: 100%;
 }
+
+/* COMPONENTES */
+
+.container-limit {
+  height: 78.5%;
+  padding: 5%;
+}
+
+#loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+  height: 100%;
+  width: 100%;
+}
+
+#footer p {
+  color: #efefef;
+}
+
+#footer span {
+  color: #ffbb33;
+}
+
+#footer-link {
+  color: #FFFFFF
+}
+
+#footer-link :hover {
+ color: #ffbb33;
+}
+
+#card {
+  width: 280px;
+}
+
+#card p {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+#card-title {
+  background-color: #222;
+  color: #ffbb33;
+  padding: 0.5em;
+  margin-bottom: 1em;
+  text-align: center;
+  border-radius: 10px
+}
+
+#card .content {
+  margin-top: 1em;
+  margin-bottom: 1.5em;
+}
+
+#card .content span {
+  font-weight: bold;
+}
+
+#card .button {
+  display: flex;
+  justify-content: space-between;
+}
+
+.custom-button {
+  background-color: #222;
+}
+
+/* PÁGINAS */
+
+#home-page{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: auto;
+}
+
+#home-page img {
+  width: 40%;
+  margin: 2em 0;
+}
+
+#home-page p {
+  margin-bottom: 3.5em;
+  color: #7b7b7b;
+}
+
+#home-page span {
+  color: #ffbb33;
+  padding: 0.075em 0.5em;
+  background-color: #222;
+  border-radius: 10px;
+}
+
+#home-page h1{
+  font-size: 2em;
+  margin-bottom: 0.5em;
+}
