@@ -1,25 +1,29 @@
-import { Link } from "react-router-dom";
 import { BsFillTrashFill } from "react-icons/bs";
-import Styles from "../service/ServiceCard.module.css";
+import Button from 'react-bootstrap/Button';
+import Card from 'react-bootstrap/Card';
 
-function ServiceCard({showOwner, owner, id, name, cost, description, url, handleRemove}) {
+function ServiceCard({owner, id, name, cost, description, url, handleRemove}) {
   const remove = (e) => {
     e.preventDefault();
     handleRemove(id);
   };
 
   return (
-    <div className={Styles.project_card}>
-      <h4>{name}</h4>
-      <p><span>Pertencente: </span>{owner}</p>
-      <p><span>Custo Total: </span> R$ {cost}</p>
-      <p><span>Descrição: </span>{description}</p>
-      <p><span>URL: </span>{url}</p>
-      <div className={Styles.project_card_actions}>
-        <Link to={`/service/${id}`}> Visualizar</Link>
-        <button onClick={remove}><BsFillTrashFill /> Excluir </button>
-      </div>
-    </div>
+    <Card id="card">
+      <Card.Body>
+        <Card.Title id="card-title">{name}</Card.Title>
+        <div className="content">
+          <Card.Text><span>Pertencente: </span>{owner}</Card.Text>
+          <Card.Text><span>Custo Total: </span>{cost}</Card.Text>
+          <Card.Text><span>Descrição: </span>{description}</Card.Text>
+          <Card.Text><span>URL: </span>{url}</Card.Text>
+        </div>
+        <div className="button">
+          <Button className="custom-button" href={`/service/${id}`}> Visualizar</Button>
+          <Button className="custom-button" onClick={remove}><BsFillTrashFill /> Excluir </Button>
+        </div>
+      </Card.Body>
+    </Card>
   )
 }
 

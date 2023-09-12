@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 
-import Styles from "./Project.module.css";
+import Styles from "./Services.module.css";
 import Loading from "./../layout/Loading";
 import Message from "./../layout/Message";
 import Container from "../layout/Container";
@@ -80,7 +80,7 @@ function Service() {
 
   return (<>
     {service?.name? (
-      <div className={Styles.project_details}>
+      <div className={Styles.service_details}>
         <Container customClass="column">
           {message && <Message type={type} msg={message} />}
           <div className={Styles.details_container}>
@@ -89,14 +89,14 @@ function Service() {
               {!showServiceForm ? "Editar Serviço" : "Fechar"}
             </button>
             {!showServiceForm ? (
-              <div className={Styles.project_info}>
+              <div className={Styles.service_info}>
                 <p><span> Projeto Pertecente: </span>{ProjectOwnerName?.length > 0 ? (ProjectOwnerName?.map((Owner) => Owner?.name)) : nothing}</p>
                 <p><span> Descrição: </span>{service?.description ? (service?.description) : nothing}</p>
                 <p><span> Custo: </span>{service?.cost ? (`R$ ${formatedCurrency(parseInt(service?.cost))}`) : nothing}</p>
                 <p><span> URL: </span>{service?.url ? (service?.url) : nothing}</p>
               </div>
             ) : ((
-              <div className={Styles.project_info}>
+              <div className={Styles.service_info}>
                 <ServiceForm
                   handleSubmit={editService}
                   btnText="Concluir Edição"

@@ -60,52 +60,72 @@ function Projects() {
     return services.filter((thoseServices) => parseInt(thoseServices?.OwnerID?.id) === id).length
   }
 
+  function showServicesOwned (project) {
+    if (ownedServicesCount(project.id) > 0) {
+      return ownedServicesCount(project.id)} 
+    else {return nothing}
+  }
+
+  function showCost (project) {
+    if (projectCost(project.id) > 0) {
+      return `R$ ${format(projectCost(project?.id))},00 ${percentage((projectCost(project?.id)), (parseInt(project?.budget)))}`} 
+    else {return nothing}
+  }
+
+  function showBudget (project) {
+    if (project.budget > 0) {
+      return `R$ ${format(project.budget)},00`} 
+    else {return nothing}
+  }
+
+  function showTotal (data) {
+    if (data > 0) {
+      return `R$ ${format(data)},00`} 
+    else {return nothing}
+  }
+
   return (<>
     {!removeLoading && <Loading/>}
     {removeLoading === true && <>
-      {projects.length !== 0 ? (<>
-          <div className={styles.project_container}>
-            <div className={styles.title_container}>
-              <h1>Meus Projetos</h1>
-              <LinkButton to="/NewProject" text="Criar Projeto" />
-            </div>
-            {message && <Message type="succsess" msg={message} />}
-            {projectMessage && <Message type="succsess" msg={projectMessage} />}
-            <Container customClass="start">
-              <div className={styles.projectCard}>
-                {projects.length > 0 && projects.filter((projects) => projects.id > 0).map((project) => (
-                  <ProjectCard
-                    id={project.id}
-                    key={project.id}
-                    name={project.name}
-                    category={project.category.name}
-                    servicesOwned={ownedServicesCount(project.id) > 0 ? (ownedServicesCount(project.id)) : nothing}
-                    budget={project.budget > 0 ? (`${format(project.budget)},00`) : nothing}
-                    cost={projectCost(project.id) > 0 ? (`${format(projectCost(project?.id))},00 ${percentage((projectCost(project?.id)), (parseInt(project?.budget)))}`) : nothing}
-                    handleRemove={removeProject}
-                  />))}
-              </div>
-              {projects.length > 0 && <>
-                <div className={styles.total}>
-                  <div className={styles.total_container}>
-                    <h3>Investimento Total:</h3>
-                    <h3>{totalBudget > 0  ? (`R$ ${format(totalBudget)},00`) : nothing}</h3>
-                    </div>
-                  <div className={styles.total_container}>
-                    <h3>Total Restante: </h3>
-                    <h3>{totalRemain > 0 ? (`R$ ${format(totalRemain)},00`) : nothing}</h3>
-                  </div>
-                </div>
-              </>}
-            </Container>
+      {projects.length > 1 ? (<>
+          <div className={styles.title}>
+            <h1>Meus Projetos</h1>
+            <LinkButton to="/NewProject" text="Criar Projeto" />
           </div>
+          {message && <Message type="succsess" msg={message} />}
+          {projectMessage && <Message type="succsess" msg={projectMessage} />}
+          <Container>
+            <div className={styles.projectCard}>
+              {projects.length > 1 && projects.filter((projects) => projects.id > 0).map((project) => (
+                <ProjectCard
+                  id={project.id}
+                  key={project.id}
+                  name={project.name}
+                  category={project.category.name}
+                  servicesOwned={showServicesOwned(project)}
+                  budget={showBudget(project)}
+                  cost={showCost(project)}
+                  handleRemove={removeProject}
+                />))}
+            </div>
+            {projects.length > 1 && <>
+              <div className={styles.total}>
+                <div className={styles.total_container}>
+                  <p>Investimento Total: {showTotal(totalBudget)}</p>
+                </div>
+                <div className={styles.total_container}>
+                  <p>Total Restante: {showTotal(totalRemain)}</p>
+                </div>
+              </div>
+            </>}
+          </Container>
       </>) : (<>
-        <div className={styles.project_container}>
-          <div className={styles.title_container}>
+        <div className={styles.project}>
+          <div className={styles.title}>
             <h1>Meus Projetos</h1>
             <LinkButton to="/newproject" text="Criar Projeto" />
           </div>
-        <NoData dataType={'Projetos'}/>
+          <NoData dataType={'Projetos'}/>
         </div>
       </>)}
     </>}

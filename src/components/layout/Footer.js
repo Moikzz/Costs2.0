@@ -1,17 +1,19 @@
 import { FaFacebook, FaInstagram, FaLinkedin } from "react-icons/fa";
-
-import styles from "./Footer.module.css";
+import {Container, Navbar } from "react-bootstrap";
+import Nav from 'react-bootstrap/Nav';
 
 function Footer() {
   return (
-    <footer className={styles.footer}>
-      <ul className={styles.social_list}>
-        <li><FaFacebook /></li>
-        <li><FaInstagram /></li>
-        <li><FaLinkedin /></li>
-      </ul>
-      <p className={styles.copy_right}><span> Costs 2.0 </span> &copy; 2023</p>
-    </footer>
+    <Navbar fixed="bottom" bg="dark">
+      <Container className="vstack gap-1">
+      <Nav className="justify-content-center">
+        <Nav.Item><Nav.Link><FaFacebook  id="footer-link"/></Nav.Link></Nav.Item>
+        <Nav.Item><Nav.Link><FaInstagram id="footer-link"/></Nav.Link></Nav.Item>
+        <Nav.Item><Nav.Link><FaLinkedin  id="footer-link"/></Nav.Link></Nav.Item>
+      </Nav>
+      <div id="footer"><p><span> Costs 2.0 </span> &copy; {new Date().getFullYear()}</p></div>
+      </Container>
+    </Navbar>
   );
 }
 export default Footer;

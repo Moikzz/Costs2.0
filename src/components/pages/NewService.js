@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import ServiceForm from "./../service/ServiceForm";
-import styles from "./NewProject.module.css";
+import styles from "./NewService.module.css";
 import Message from "./../layout/Message";
 
 function NewService() {
@@ -29,13 +29,13 @@ function NewService() {
 
     const newServiceCost = service.cost
 
-    const totalBudget = projects?.filter((project) => parseInt(project?.id) === parseInt(service?.OwnerID?.id)) // retorna só o projeto que vai virar Owner
-      .map((project) => parseInt(project?.budget)) // retorna o orçamento dele
-      .reduce((acc, val) => acc + val, 0) // transforma em um valor único 
+    const totalBudget = projects?.filter((project) => parseInt(project?.id) === parseInt(service?.OwnerID?.id))
+      .map((project) => parseInt(project?.budget))
+      .reduce((acc, val) => acc + val, 0) 
 
-    const servicesCostsOwnedByProject = services?.filter((thoseServices) => parseInt(thoseServices?.OwnerID?.id) === parseInt(service?.OwnerID?.id)) // retorna só os serviços que vão compartilhar o Owner
-      .map((service) => parseInt(service.cost)) // retorna os custos desses serviços
-      .reduce((acc, val) => acc + val, 0) // soma todo mundo em um valor único
+    const servicesCostsOwnedByProject = services?.filter((thoseServices) => parseInt(thoseServices?.OwnerID?.id) === parseInt(service?.OwnerID?.id)) 
+      .map((service) => parseInt(service.cost)) 
+      .reduce((acc, val) => acc + val, 0) 
   
     if (newServiceCost > (totalBudget - servicesCostsOwnedByProject)) {
       setMessage(`Orçamento Ultrapassado! Valor máximo disponível: R$${formatedCurrency(totalBudget - servicesCostsOwnedByProject)},00`);
@@ -53,7 +53,7 @@ function NewService() {
   }
 
   return (
-    <div className={styles.newProject_container}>
+    <div className={styles.newService_container}>
       {message && <Message type={type} msg={message} />}
       <h1>Criar Serviço</h1>
       <p>Crie um serviço para depois adicionar a um projeto</p>

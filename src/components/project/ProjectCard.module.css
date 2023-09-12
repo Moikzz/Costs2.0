@@ -1,66 +1,7 @@
-.project_card {
-  padding: 1em;
-  border: 1px solid #7a7a7a;
-  border-radius: 5px;
-  width: 320px;
-  height: 320px;
-  margin: 2%
-}
-
-.project_card h4 {
-  background-color: #222;
-  color: #ffbb33;
-  padding: 0.5em;
+#category{
+  margin-top: 1em;
   margin-bottom: 1em;
-  font-size: 1.3em;
-  text-align: center;
-  height: 25%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.project_card p {
-  color: #7a7a7a;
-}
-
-.project_card p span {
   font-weight: bolder;
-}
-
-.project_card_actions {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-end;
-  align-content: flex-end;
-  justify-content: space-between;
-  margin-top: 2em
-}
-
-.project_card a,
-.project_card_actions button {
-  color: #222;
-  text-decoration: none;
-  background-color: #FFF;
-  border: 1px solid #222;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  height: 54px;
-  width: 96px;
-  padding: .6em 1em;
-  transition: 0.5s;
-}
-
-.project_card_actions svg {
-  margin-right:  .5em;
-}
-
-.project_card_actions a:hover,
-.project_card_actions button:hover {
-  background-color: #222;
-  color: #FFBB33;
 }
 
 .category_text {
@@ -75,11 +16,6 @@
   border-radius: 50%;
   background-color: #ccc;
   margin-right: 5px;
-}
-
-#category{
-  margin-bottom: 1em;
-  font-weight: bolder;
 }
 
 .category_text .infra-estrutura {

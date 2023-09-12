@@ -1,10 +1,9 @@
-import loading from "../../img/loading.svg";
-import Styles from "./Loading.module.css";
+import Spinner from 'react-bootstrap/Spinner';
 
 function Loading() {
   return (
-    <div className={Styles.loader_container}>
-      <img src={loading} alt="Loading" className={Styles.loader} />
+    <div id='loading'>
+      <Spinner animation="border"/>
     </div>
   );
 }

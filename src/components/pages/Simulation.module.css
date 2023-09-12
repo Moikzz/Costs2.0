@@ -1,7 +1,8 @@
 .main {
+    height: 100%;    
     display: flex;
-    margin: auto;
 }
 .main h1{
-    font-size: 3em;
+    font-size: 4em;
+    margin: auto;
 }

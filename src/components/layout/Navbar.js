@@ -1,24 +1,20 @@
-import { Link } from "react-router-dom";
-import styles from "./Navbar.module.css";
+import {Container, Navbar } from "react-bootstrap";
 import logo from "../../img/costs_logo.png";
+import Nav from 'react-bootstrap/Nav';
 
-function Navbar() {
+function navbar() {
   return (
-    <nav>
-      <div className={styles.main}>
-        <div>
-          <Link to="/"><img src={logo} alt="costs" /></Link>
-        </div>
-        <div>
-          <ul className={styles.list}>
-            <li><Link to="/">Home</Link></li>
-            <li><Link to="/projects">Projetos</Link></li>
-            <li><Link to="/services">Serviços</Link></li>
-            <li><Link to="/simulation">Simulador</Link></li>
-          </ul>
-        </div>
-      </div>
-    </nav>
+    <Navbar sticky="top" bg="dark" data-bs-theme="dark">
+      <Container>
+        <Navbar.Brand href="/"><img src={logo} alt="costs"/></Navbar.Brand>
+        <Nav>
+          <Nav.Item><Nav.Link href="/">Home</Nav.Link></Nav.Item>
+          <Nav.Item><Nav.Link href="/projects">Projetos</Nav.Link></Nav.Item>
+          <Nav.Item><Nav.Link href="/services">Serviços</Nav.Link></Nav.Item>
+          <Nav.Item><Nav.Link href="/simulation">Simulador</Nav.Link></Nav.Item>
+        </Nav>
+      </Container>
+    </Navbar>
   );
 }
-export default Navbar;
+export default navbar;

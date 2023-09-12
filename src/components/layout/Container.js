@@ -1,10 +1,10 @@
-import styles from "./Container.module.css";
+import { Container } from "react-bootstrap";
 
-function Container(props) {
+function container(props) {
   return (
-    <div className={`${styles.container} ${styles[props.customClass]}`}>
+    <Container className="container-limit">
       {props.children}
-    </div>
+    </Container>
   );
 }
-export default Container;
+export default container;

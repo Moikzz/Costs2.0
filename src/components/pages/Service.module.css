@@ -1,21 +1,21 @@
-.project_details {
+.service_details {
     padding: 2em;
 
 }
 
-.project_details h1,
-.project_details h2,
-.project_details p {
+.service_details h1,
+.service_details h2,
+.service_details p {
     margin-bottom: 0.5em;
 }
 
-.project_details h1 {
+.service_details h1 {
     background-color: #222;
     color: #FFBB33;
     padding: 0.4em;
 }
 
-.project_details span {
+.service_details span {
     font-weight: bold;
 }
 
@@ -44,6 +44,6 @@
     color: #ffbb33;
   }
 
-  .project_info {
+  .service_info {
     width: 100%;
   }
